@@ -8,6 +8,19 @@ from nltk.stem.porter import PorterStemmer
 
 ps = PorterStemmer()
 
+import os
+
+
+NLTK_DATA_DIR = os.path.join(os.getcwd(), "nltk_data")
+os.makedirs(NLTK_DATA_DIR, exist_ok=True)
+nltk.data.path.append(NLTK_DATA_DIR)
+
+for resource in ["punkt", "punkt_tab"]:
+    try:
+        nltk.data.find(f"tokenizers/{resource}")
+    except LookupError:
+        nltk.download(resource, download_dir=NLTK_DATA_DIR)
+        
 def transform_text(text):
     text = text.lower()
     text = nltk.word_tokenize(text)
